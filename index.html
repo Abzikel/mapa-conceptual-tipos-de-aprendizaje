@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual — Tipos de Aprendizaje</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+        :root {
+            --conductista: #e74c3c;
+            --cognitivista: #3498db;
+            --constructivista: #27ae60;
+            --sociocultural: #9b59b6;
+            --significativo: #f39c12;
+            --conectivista: #1abc9c;
+            --central: #2c3e50;
+            --fondo: #f4f6f9;
+            --linea: #95a5a6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--fondo);
+            color: #2c3e50;
+            padding: 24px 16px 48px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 1.65rem;
+            color: var(--central);
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        /* —— Nodo central —— */
+        .mapa {
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .nodo-central {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            border-radius: 20px;
+            padding: 22px 36px;
+            text-align: center;
+            max-width: 420px;
+            margin: 0 auto 36px;
+            box-shadow: 0 8px 28px rgba(44, 62, 80, .28);
+            position: relative;
+            z-index: 2;
+        }
+
+        .nodo-central h2 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+
+        .nodo-central span {
+            font-size: 0.82rem;
+            opacity: .85;
+        }
+
+        /* —— Conector vertical desde el centro —— */
+        .eje {
+            width: 3px;
+            height: 28px;
+            background: var(--linea);
+            margin: -12px auto 0;
+        }
+
+        /* —— Sección de teorías —— */
+        .seccion-titulo {
+            text-align: center;
+            margin: 18px 0 16px;
+        }
+
+        .seccion-titulo h3 {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid var(--central);
+            color: var(--central);
+            padding: 6px 22px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            letter-spacing: .4px;
+            text-transform: uppercase;
+        }
+
+        .teorias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .tarjeta {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, .07);
+            border-top: 5px solid #ccc;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
+        }
+
+        .tarjeta.conductista {
+            border-color: var(--conductista);
+        }
+
+        .tarjeta.cognitivista {
+            border-color: var(--cognitivista);
+        }
+
+        .tarjeta.constructivista {
+            border-color: var(--constructivista);
+        }
+
+        .tarjeta.sociocultural {
+            border-color: var(--sociocultural);
+        }
+
+        .tarjeta.significativo {
+            border-color: var(--significativo);
+        }
+
+        .tarjeta.conectivista {
+            border-color: var(--conectivista);
+        }
+
+        .tarjeta-header {
+            padding: 12px 16px 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icono {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .conductista .icono {
+            background: var(--conductista);
+        }
+
+        .cognitivista .icono {
+            background: var(--cognitivista);
+        }
+
+        .constructivista .icono {
+            background: var(--constructivista);
+        }
+
+        .sociocultural .icono {
+            background: var(--sociocultural);
+        }
+
+        .significativo .icono {
+            background: var(--significativo);
+        }
+
+        .conectivista .icono {
+            background: var(--conectivista);
+        }
+
+        .tarjeta-header h4 {
+            font-size: 1.02rem;
+            line-height: 1.25;
+        }
+
+        .tarjeta-header small {
+            display: block;
+            font-weight: 400;
+            color: #888;
+            font-size: .75rem;
+        }
+
+        .tarjeta-body {
+            padding: 4px 16px 14px;
+            font-size: .84rem;
+            line-height: 1.5;
+        }
+
+        .conector-txt {
+            display: inline-block;
+            background: #ecf0f1;
+            color: #555;
+            font-size: .72rem;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 4px;
+            margin: 2px 0;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        .tarjeta-body ul {
+            list-style: none;
+            margin-top: 4px;
+        }
+
+        .tarjeta-body li {
+            padding: 3px 0 3px 14px;
+            position: relative;
+        }
+
+        .tarjeta-body li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #aaa;
+            font-size: .7rem;
+            top: 5px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+            color: #fff;
+        }
+
+        .conductista .etiqueta {
+            background: var(--conductista);
+        }
+
+        .cognitivista .etiqueta {
+            background: var(--cognitivista);
+        }
+
+        .constructivista .etiqueta {
+            background: var(--constructivista);
+        }
+
+        .sociocultural .etiqueta {
+            background: var(--sociocultural);
+        }
+
+        .significativo .etiqueta {
+            background: var(--significativo);
+        }
+
+        .conectivista .etiqueta {
+            background: var(--conectivista);
+        }
+
+        /* —— Flechas de relación entre bloques —— */
+        .relacion {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 8px auto 20px;
+            flex-wrap: wrap;
+        }
+
+        .relacion .flecha-box {
+            background: #fff;
+            border: 1.5px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: .8rem;
+            text-align: center;
+            color: #555;
+            max-width: 260px;
+        }
+
+        .relacion .flecha-box strong {
+            display: block;
+            color: var(--central);
+            font-size: .85rem;
+        }
+
+        .simbolo {
+            font-size: 1.4rem;
+            color: var(--linea);
+        }
+
+        /* —— Evolución histórica (línea de tiempo) —— */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            position: relative;
+            margin: 12px 0 36px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, .07);
+            overflow: hidden;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 52px;
+            left: 8%;
+            right: 8%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--conductista), var(--cognitivista), var(--constructivista), var(--conectivista));
+            z-index: 0;
+        }
+
+        .tl-item {
+            text-align: center;
+            padding: 18px 12px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tl-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px currentColor;
+        }
+
+        .tl-item:nth-child(1) .tl-dot {
+            background: var(--conductista);
+            color: var(--conductista);
+        }
+
+        .tl-item:nth-child(2) .tl-dot {
+            background: var(--cognitivista);
+            color: var(--cognitivista);
+        }
+
+        .tl-item:nth-child(3) .tl-dot {
+            background: var(--constructivista);
+            color: var(--constructivista);
+        }
+
+        .tl-item:nth-child(4) .tl-dot {
+            background: var(--conectivista);
+            color: var(--conectivista);
+        }
+
+        .tl-epoca {
+            font-weight: 700;
+            font-size: .82rem;
+            margin-bottom: 2px;
+        }
+
+        .tl-item:nth-child(1) .tl-epoca {
+            color: var(--conductista);
+        }
+
+        .tl-item:nth-child(2) .tl-epoca {
+            color: var(--cognitivista);
+        }
+
+        .tl-item:nth-child(3) .tl-epoca {
+            color: var(--constructivista);
+        }
+
+        .tl-item:nth-child(4) .tl-epoca {
+            color: var(--conectivista);
+        }
+
+        .tl-nombre {
+            font-size: .88rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tl-desc {
+            font-size: .75rem;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        /* —— Ecología del aprendizaje —— */
+        .ecologia {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .eco-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .06);
+            border-left: 4px solid var(--central);
+        }
+
+        .eco-card h4 {
+            font-size: .92rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eco-card p,
+        .eco-card li {
+            font-size: .8rem;
+            color: #555;
+            line-height: 1.45;
+        }
+
+        .eco-card ul {
+            list-style: none;
+            margin-top: 4px;
+        }
+
+        .eco-card li {
+            padding: 2px 0 2px 12px;
+            position: relative;
+        }
+
+        .eco-card li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--central);
+        }
+
+        /* —— Matriz de evaluación —— */
+        .matriz {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .mat-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .06);
+        }
+
+        .mat-item .mat-icon {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .mat-item h5 {
+            font-size: .88rem;
+            margin-bottom: 3px;
+        }
+
+        .mat-item p {
+            font-size: .75rem;
+            color: #777;
+        }
+
+        .mat-item .enlace {
+            display: inline-block;
+            margin-top: 5px;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: #fff;
+        }
+
+        /* —— Conclusión —— */
+        .conclusion {
+            background: linear-gradient(135deg, #2c3e50, #3d566e);
+            color: #fff;
+            border-radius: 16px;
+            padding: 24px 28px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 8px 28px rgba(44, 62, 80, .25);
+        }
+
+        .conclusion h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .conclusion p {
+            font-size: .88rem;
+            line-height: 1.55;
+            opacity: .92;
+        }
+
+        .conclusion .palabras {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .conclusion .palabras span {
+            background: rgba(255, 255, 255, .15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .78rem;
+            font-weight: 600;
+        }
+
+        /* —— Leyenda de conectores —— */
+        .leyenda {
+            max-width: 700px;
+            margin: 28px auto 0;
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+            font-size: .78rem;
+        }
+
+        .leyenda h4 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: .85rem;
+        }
+
+        .leyenda-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            justify-content: center;
+        }
+
+        .leyenda-grid span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .leyenda-grid i {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .footer-ref {
+            text-align: center;
+            margin-top: 24px;
+            font-size: .72rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>🗺️ Mapa Conceptual: Tipos de Aprendizaje</h1>
+        <p>Fundamentos teóricos, cruces conceptuales y evolución histórica</p>
+    </div>
+
+    <div class="mapa">
+
+        <!-- NODO CENTRAL -->
+        <div class="nodo-central">
+            <h2>APRENDIZAJE</h2>
+            <span>Proceso de adquisición de conocimientos, habilidades,<br>valores y actitudes mediante la experiencia y
+                el entorno</span>
+        </div>
+
+        <!-- ========== TEORÍAS ========== -->
+        <div class="seccion-titulo">
+            <h3>1 · Teorías del aprendizaje</h3>
+        </div>
+
+        <div class="teorias">
+
+            <!-- Conductista -->
+            <div class="tarjeta conductista">
+                <div class="tarjeta-header">
+                    <div class="icono">🎯</div>
+                    <h4>Conductista<small>Pávlov · Skinner</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">se basa en</span>
+                    <ul>
+                        <li>Estímulos, respuestas y refuerzos</li>
+                        <li>Cambios observables y medibles</li>
+                        <li>Control ambiental de la conducta</li>
+                    </ul>
+                    <span class="conector-txt">se aplica mediante</span>
+                    <ul>
+                        <li>Recompensas y gamificación (puntos, insignias)</li>
+                        <li>Instauración de hábitos y disciplina</li>
+                    </ul>
+                    <span class="etiqueta">Motivación extrínseca</span>
+                </div>
+            </div>
+
+            <!-- Cognitivista -->
+            <div class="tarjeta cognitivista">
+                <div class="tarjeta-header">
+                    <div class="icono">🧠</div>
+                    <h4>Cognitivista<small>Metáfora del procesador</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">surge como reacción a</span>
+                    <ul>
+                        <li>El conductismo (va más allá de lo observable)</li>
+                    </ul>
+                    <span class="conector-txt">se centra en</span>
+                    <ul>
+                        <li>Percepción, atención y memoria</li>
+                        <li>Organización en estructuras cognitivas</li>
+                        <li>Segmentación y práctica espaciada</li>
+                    </ul>
+                    <span class="conector-txt">se aplica mediante</span>
+                    <ul>
+                        <li>Estrategias de resumen y metacognición</li>
+                        <li>Instrucción explícita a novatos</li>
+                    </ul>
+                    <span class="etiqueta">Procesamiento activo</span>
+                </div>
+            </div>
+
+            <!-- Constructivista -->
+            <div class="tarjeta constructivista">
+                <div class="tarjeta-header">
+                    <div class="icono">🔧</div>
+                    <h4>Constructivista<small>El alumno como protagonista</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">sostiene que</span>
+                    <ul>
+                        <li>El conocimiento se construye activamente</li>
+                        <li>Parte de experiencias previas e interacción</li>
+                    </ul>
+                    <span class="conector-txt">se vincula con</span>
+                    <ul>
+                        <li>Aprendizaje significativo (Ausubel)</li>
+                        <li>Andamiaje progresivo hacia la autonomía</li>
+                    </ul>
+                    <span class="conector-txt">se aplica mediante</span>
+                    <ul>
+                        <li>Trabajo en equipo, maquetas, ABP</li>
+                        <li>Investigación autónoma</li>
+                    </ul>
+                    <span class="etiqueta">Construcción activa</span>
+                </div>
+            </div>
+
+            <!-- Sociocultural -->
+            <div class="tarjeta sociocultural">
+                <div class="tarjeta-header">
+                    <div class="icono">👥</div>
+                    <h4>Sociocultural<small>Lev Vygotsky</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">plantea que</span>
+                    <ul>
+                        <li>El aprendizaje ocurre en la interacción social</li>
+                        <li>El lenguaje y la cultura son mediadores</li>
+                    </ul>
+                    <span class="conector-txt">concepto clave</span>
+                    <ul>
+                        <li><strong>Zona de Desarrollo Próximo (ZDP)</strong></li>
+                        <li>Progreso con apoyo de otros (andamiaje)</li>
+                    </ul>
+                    <span class="conector-txt">se aplica mediante</span>
+                    <ul>
+                        <li>Proyectos grupales y colaboración</li>
+                        <li>Docente como facilitador</li>
+                    </ul>
+                    <span class="etiqueta">Mediación social</span>
+                </div>
+            </div>
+
+            <!-- Significativo -->
+            <div class="tarjeta significativo">
+                <div class="tarjeta-header">
+                    <div class="icono">🔗</div>
+                    <h4>Significativo<small>David Ausubel</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">ocurre cuando</span>
+                    <ul>
+                        <li>Lo nuevo se conecta con saberes previos</li>
+                        <li>La información resulta relevante y funcional</li>
+                    </ul>
+                    <span class="conector-txt">permite</span>
+                    <ul>
+                        <li>Retención duradera (no mecánica)</li>
+                        <li>Comprensión profunda y transferible</li>
+                    </ul>
+                    <span class="conector-txt">se entrelaza con</span>
+                    <ul>
+                        <li>Constructivismo (construcción de significado)</li>
+                        <li>Cognitivismo (estructuras de conocimiento)</li>
+                    </ul>
+                    <span class="etiqueta">Conexión sustancial</span>
+                </div>
+            </div>
+
+            <!-- Conectivista -->
+            <div class="tarjeta conectivista">
+                <div class="tarjeta-header">
+                    <div class="icono">🌐</div>
+                    <h4>Conectivista<small>George Siemens · Era digital</small></h4>
+                </div>
+                <div class="tarjeta-body">
+                    <span class="conector-txt">sostiene que</span>
+                    <ul>
+                        <li>Aprender es crear y navegar redes</li>
+                        <li>El saber reside en personas y tecnología</li>
+                    </ul>
+                    <span class="conector-txt">responde a</span>
+                    <ul>
+                        <li>Cambios acelerados del siglo XXI</li>
+                        <li>Globalización y sociedad del conocimiento</li>
+                    </ul>
+                    <span class="conector-txt">se aplica mediante</span>
+                    <ul>
+                        <li>Redes sociales y plataformas digitales</li>
+                        <li>Docente como curador de información</li>
+                    </ul>
+                    <span class="etiqueta">Aprendizaje en red</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relaciones transversales -->
+        <div class="relacion">
+            <div class="flecha-box">
+                <strong>Conductismo → Cognitivismo</strong>
+                reacciona y trasciende lo observable hacia procesos mentales
+            </div>
+            <span class="simbolo">⇄</span>
+            <div class="flecha-box">
+                <strong>Cognitivismo → Constructivismo</strong>
+                de procesar información a construir significado con autonomía
+            </div>
+            <span class="simbolo">⇄</span>
+            <div class="flecha-box">
+                <strong>Constructivismo ⇄ Sociocultural</strong>
+                la construcción se enriquece con la mediación social (ZDP)
+            </div>
+            <span class="simbolo">⇄</span>
+            <div class="flecha-box">
+                <strong>Todas → Conectivismo</strong>
+                se reconfiguran en redes digitales y ecologías de aprendizaje
+            </div>
+        </div>
+
+        <!-- ========== EVOLUCIÓN HISTÓRICA ========== -->
+        <div class="seccion-titulo">
+            <h3>2 · Evolución histórica e influencia social</h3>
+        </div>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-epoca">Inicios s. XX</div>
+                <div class="tl-nombre">Conductismo</div>
+                <div class="tl-desc">Positivismo industrial → disciplina y uniformidad para la sociedad fabril</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-epoca">Mediados s. XX</div>
+                <div class="tl-nombre">Cognitivismo</div>
+                <div class="tl-desc">Ciencias de la computación → foco en procesos internos de la mente</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-epoca">Finales s. XX</div>
+                <div class="tl-nombre">Constructivismo y Sociocultural</div>
+                <div class="tl-desc">Sociedad participativa → sujetos autónomos que resuelven problemas</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-epoca">Siglo XXI</div>
+                <div class="tl-nombre">Conectivismo e Innovación</div>
+                <div class="tl-desc">Digitalización → aprendizaje continuo en entornos interconectados</div>
+            </div>
+        </div>
+
+        <!-- ========== ECOLOGÍA / FUNDAMENTOS ========== -->
+        <div class="seccion-titulo">
+            <h3>3 · Fundamentos: ecología del aprendizaje</h3>
+        </div>
+        <p style="text-align:center;font-size:.82rem;color:#777;margin:-8px 0 14px">
+            Las teorías <strong>no se aplican de forma aislada</strong>, sino como capas complementarias
+        </p>
+
+        <div class="ecologia">
+            <div class="eco-card" style="border-color: var(--conductista)">
+                <h4>⚙️ Gestión y hábitos</h4>
+                <p><span class="conector-txt">aporta</span> el conductismo</p>
+                <ul>
+                    <li>Automatismos y disciplina</li>
+                    <li>Gamificación (puntos, niveles)</li>
+                    <li>Motivación extrínseca inicial</li>
+                </ul>
+            </div>
+            <div class="eco-card" style="border-color: var(--cognitivista)">
+                <h4>📐 Estructuración del pensamiento</h4>
+                <p><span class="conector-txt">aporta</span> el cognitivismo</p>
+                <ul>
+                    <li>Ingeniería de la memoria de trabajo</li>
+                    <li>Segmentación y práctica espaciada</li>
+                    <li>Instrucción explícita a novatos</li>
+                </ul>
+            </div>
+            <div class="eco-card" style="border-color: var(--constructivista)">
+                <h4>🎓 Andamiaje progresivo</h4>
+                <p><span class="conector-txt">equilibra</span> guía y autonomía</p>
+                <ul>
+                    <li>Novatos → instrucción dirigida</li>
+                    <li>Expertos → facilitación y ABP</li>
+                    <li>Comprensión profunda y transferible</li>
+                </ul>
+            </div>
+            <div class="eco-card" style="border-color: #e67e22">
+                <h4>💚 Dimensión socioemocional</h4>
+                <p><span class="conector-txt">aporta</span> el enfoque humanista</p>
+                <ul>
+                    <li>Autoestima y bienestar emocional</li>
+                    <li>Pertenencia como requisito previo</li>
+                    <li>Educación personalizada</li>
+                </ul>
+            </div>
+            <div class="eco-card" style="border-color: var(--conectivista)">
+                <h4>📡 Aprendizaje en red</h4>
+                <p><span class="conector-txt">aporta</span> el conectivismo</p>
+                <ul>
+                    <li>Curaduría docente de información</li>
+                    <li>Ciudadanía digital y ética</li>
+                    <li>Filtrar, conectar y colaborar en red</li>
+                </ul>
+            </div>
+            <div class="eco-card" style="border-color: var(--sociocultural)">
+                <h4>🤝 Mediación y ZDP</h4>
+                <p><span class="conector-txt">aporta</span> el sociocultural</p>
+                <ul>
+                    <li>Colaboración entre pares</li>
+                    <li>Docente facilitador / mediador</li>
+                    <li>Lenguaje como herramienta cultural</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========== MATRIZ DE EVALUACIÓN ========== -->
+        <div class="seccion-titulo">
+            <h3>4 · Matriz de aplicación integral</h3>
+        </div>
+
+        <div class="matriz">
+            <div class="mat-item">
+                <div class="mat-icon">📋</div>
+                <h5>Desempeño auténtico</h5>
+                <p>Proyectos y resolución de casos reales</p>
+                <span class="enlace" style="background:var(--constructivista)">Constructivismo</span>
+            </div>
+            <div class="mat-item">
+                <div class="mat-icon">📂</div>
+                <h5>Evidencias de proceso</h5>
+                <p>Portafolios y diarios de aprendizaje (metacognición)</p>
+                <span class="enlace" style="background:var(--cognitivista)">Cognitivismo</span>
+            </div>
+            <div class="mat-item">
+                <div class="mat-icon">☀️</div>
+                <h5>Bienestar</h5>
+                <p>Climas escolares positivos que reducen el abandono</p>
+                <span class="enlace" style="background:#e67e22">Humanismo</span>
+            </div>
+            <div class="mat-item">
+                <div class="mat-icon">🎮</div>
+                <h5>Hábitos y engagement</h5>
+                <p>Refuerzos, niveles e insignias en entornos digitales</p>
+                <span class="enlace" style="background:var(--conductista)">Conductismo</span>
+            </div>
+        </div>
+
+        <!-- ========== CONCLUSIÓN ========== -->
+        <div class="conclusion">
+            <h3>💡 Idea integradora</h3>
+            <p>
+                Ninguna teoría es suficiente por sí sola.
+                El éxito educativo depende de <strong>articular estrategias</strong> que integren
+                lo mejor de cada enfoque → pasar de una «enseñanza de contenidos»
+                a un <strong>diseño de experiencias</strong> donde el docente orquesta
+                intencionalmente cada teoría según el contexto y el nivel del estudiante.
+            </p>
+            <div class="palabras">
+                <span>Complementariedad</span>
+                <span>Andamiaje progresivo</span>
+                <span>Ecología del aprendizaje</span>
+                <span>Sociedad digital</span>
+                <span>Docente orquestador</span>
+            </div>
+        </div>
+
+        <!-- Leyenda -->
+        <div class="leyenda">
+            <h4>Leyenda de conectores estratégicos</h4>
+            <div class="leyenda-grid">
+                <span><i style="background:var(--conductista)"></i> se basa en / se aplica mediante</span>
+                <span><i style="background:var(--cognitivista)"></i> surge como reacción a / se centra en</span>
+                <span><i style="background:var(--constructivista)"></i> sostiene que / se vincula con</span>
+                <span><i style="background:var(--sociocultural)"></i> plantea que / concepto clave</span>
+                <span><i style="background:var(--significativo)"></i> ocurre cuando / se entrelaza con</span>
+                <span><i style="background:var(--conectivista)"></i> responde a / reconfigura</span>
+            </div>
+        </div>
+
+        <p class="footer-ref">
+            Fuente: Zúñiga Berumen, D. R. — Tipos de aprendizaje, fundamentos teóricos y evolución histórica<br>
+            Aguirre-Zambrano et al. (2025) · Docentes al Día (2024) · Revista de Estilos de Aprendizaje (2024)
+        </p>
+
+    </div>
+</body>
+
+</html>
